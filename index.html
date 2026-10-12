@@ -1,58 +1,139 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Travel guide</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Карелия — По следам времени</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      // Сайт всегда открывается с главной страницы: отключаем восстановление
+      // прошлой прокрутки и убираем #-якорь из адреса (например #route),
+      // иначе после перезагрузки браузер сам прокручивает к карте
+      history.scrollRestoration = 'manual';
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
+      }
+    </script>
+    <script src="https://mapgl.2gis.com/api/js/v1"></script>
   </head>
   <body>
-    <section class="start">
-      <header class="header">
-        <div class="header-wrapper">
-          <div class="header-logo">
-            <img src="img/logo.svg" alt="" width="45" height="30" />
-            <p>Малая родина</p>
-          </div>
-          <nav class="header-nav">
-            <a href="" class="header-nav__link">Главная</a>
-            <a href="" class="header-nav__link">Маршрут</a>
-            <a href="" class="header-nav__link">О нас</a>
-          </nav>
-        </div>
-      </header>
+    <header class="header">
+      <div class="header-wrapper">
+        <a class="header-logo" href="#top">
+          <img src="img/logo.svg" alt="" width="45" height="30" />
+          <p>Карелия</p>
+        </a>
+        <nav class="header-nav">
+          <a href="#top" class="header-nav__link">Главная</a>
+          <a href="#route" class="header-nav__link">Маршрут</a>
+        </nav>
+      </div>
+    </header>
+    <section class="start" id="top">
       <div class="hero">
         <div class="hero-wrapper">
           <p class="hero-caption">добро пожаловать</p>
           <h1 class="hero-title">По следам<br />времени</h1>
-          <p class="hero-caption">Туристически маршрут по малой родине.</p>
-          <p class="hero-caption">Десять мест, связанных одной историей.</p>
-          <button class="hero-btn">
-            Открыть маршрут<svg
-              width="36"
-              height="24"
-              viewBox="0 0 36 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2 12H32M26 6L32 12L26 18"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </button>
+          <p class="hero-text">Туристический маршрут по Карелии.</p>
+          <p class="hero-text">Десять мест, связанных одной историей.</p>
         </div>
       </div>
-      <div class="footer">
-        <div class="footer-wrapper">
-          <p class="footer-wrapper_au">О нас</p>
-          <p class="footer-wrapper__inf">Мы - команда учебного проекта. Исследуем регион и собираем истории его мест.</p>
-          <p class="footer-wrapper__inf">Учебный проект</p>
+      <!-- Блок «О нас» пока убран: позже станет отдельной страницей -->
+    </section>
+    <section class="layout" id="route">
+      <div class="layout-wrapper">
+        <h2>По следам Петра Великого в Карелии</h2>
+        <p>историко-культурный маршрут</p>
+        <div class="map">
+          <aside class="map-sidebar" id="map-sidebar">
+            <h2>Остановки</h2>
+            <div id="map-list"></div>
+          </aside>
+
+          <!-- Кнопки над картой: видны только на мобильных -->
+          <div class="map-cta">
+            <button type="button" class="btn-start" data-goto-place="1">
+              Начать<svg
+                width="36"
+                height="24"
+                viewBox="0 0 36 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2 12H32M26 6L32 12L26 18"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <button
+              type="button"
+              class="map-stops-toggle"
+              id="stops-toggle"
+              aria-expanded="false"
+              aria-controls="map-list"
+            >
+              Остановки<svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 3.5H13M1 7H13M1 10.5H13"
+                  stroke="#111"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          <main id="map-panel"></main>
+
+          <aside class="map-info" id="info">
+            <div class="map-info__empty">
+              <p>
+                Откройте для себя Карелию — край богатой истории, самобытной
+                архитектуры и удивительной северной природы. Погрузитесь в
+                атмосферу петровской эпохи, познакомьтесь с культурным наследием
+                региона и узнайте, как история России связана с этими местами.
+              </p>
+              <p>
+                <b>Исследуйте маршрут на карте:</b> нажмите на остановку, чтобы узнать
+                больше о достопримечательности, её истории и интересных фактах.
+              </p>
+              <button type="button" class="btn-start" data-goto-place="1">
+                Начать<svg
+                  width="36"
+                  height="24"
+                  viewBox="0 0 36 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M2 12H32M26 6L32 12L26 18"
+                    stroke="white"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </aside>
         </div>
+
+        <!-- Затемнение под выезжающим меню остановок (мобильные) -->
+        <div class="map-overlay" id="map-overlay"></div>
       </div>
     </section>
+
+    <script src="js/app.js"></script>
+
   </body>
 </html>

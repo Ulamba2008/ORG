@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 680" fill="none">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f3f3f0"/>
+    </linearGradient>
+
+    <!-- Стилизованная северная сосна: база отсчёта — низ ствола -->
+    <g id="pine">
+      <path d="M0 -150 L19 -109 L-19 -109 Z M0 -128 L27 -72 L-27 -72 Z M0 -96 L36 -30 L-36 -30 Z"/>
+      <rect x="-2.5" y="-30" width="5" height="30"/>
+    </g>
+  </defs>
+
+  <!-- Небо -->
+  <rect width="1600" height="680" fill="url(#sky)"/>
+
+  <!-- Солнце -->
+  <circle cx="1245" cy="185" r="95" fill="#e5e3dc"/>
+  <circle cx="1245" cy="185" r="112" stroke="#e5e3dc" stroke-width="1.5"/>
+
+  <!-- Птицы -->
+  <path d="M815 150 q10 -10 20 0 q10 -10 20 0" stroke="#a9a7a1" stroke-width="2" stroke-linecap="round"/>
+  <path d="M898 122 q8 -8 16 0 q8 -8 16 0" stroke="#a9a7a1" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M862 196 q7 -7 14 0 q7 -7 14 0" stroke="#a9a7a1" stroke-width="1.6" stroke-linecap="round"/>
+
+  <!-- Лес на горизонте: полоса + редкие ели вдоль всей ширины -->
+  <rect x="0" y="478" width="1600" height="24" fill="#e6e4de"/>
+  <path d="M60 478 l7 -18 l7 18 Z M150 478 l8 -24 l8 24 Z M245 478 l6 -14 l6 14 Z M330 478 l7 -20 l7 20 Z
+           M415 478 l6 -12 l6 12 Z M495 478 l7 -18 l7 18 Z M580 478 l6 -14 l6 14 Z M655 478 l8 -22 l8 22 Z
+           M735 478 l6 -13 l6 13 Z M1200 478 l7 -18 l7 18 Z M1285 478 l6 -13 l6 13 Z
+           M1360 478 l7 -20 l7 20 Z M1445 478 l6 -12 l6 12 Z M1520 478 l8 -24 l8 24 Z" fill="#e6e4de"/>
+
+  <!-- Вода: спокойные широкие линии во всю ширину -->
+  <path d="M40 515 H300" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+  <path d="M360 515 H640" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+  <path d="M700 515 H980" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M1040 515 H1300" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+  <path d="M1350 515 H1560" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <path d="M90 545 H480" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M510 545 H620" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M1005 545 H1140" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M1180 545 H1340" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+  <path d="M1370 545 H1540" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <path d="M60 580 H420" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.7"/>
+  <path d="M460 580 H600" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <path d="M640 580 H700" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M1030 580 H1200" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+  <path d="M1240 580 H1420" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M100 620 H540" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.65"/>
+  <path d="M580 620 H660" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M700 620 H760" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+  <path d="M1080 620 H1260" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+  <path d="M1300 620 H1480" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+  <path d="M140 660 H520" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+  <path d="M560 660 H640" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+  <path d="M700 660 H780" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+  <path d="M1120 660 H1540" stroke="#cdcdc7" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
+
+  <!-- Остров с силуэтом Кижского погоста -->
+  <path d="M745 480 C760 468 885 468 900 480 Z" fill="#dcdad4"/>
+  <g fill="#b8b6b0">
+    <!-- Покровская церковь -->
+    <rect x="800" y="450" width="34" height="30" fill="#b8b6b0"/>
+    <circle cx="806" cy="447" r="4"/>
+    <circle cx="817" cy="445" r="4.5"/>
+    <circle cx="828" cy="447" r="4"/>
+    <!-- Преображенская церковь -->
+    <rect x="836" y="440" width="26" height="40"/>
+    <circle cx="842" cy="436" r="3.5"/>
+    <circle cx="849" cy="433" r="4"/>
+    <circle cx="849" cy="425" r="3"/>
+    <circle cx="849" cy="418" r="3.5"/>
+    <circle cx="849" cy="410" r="4"/>
+    <!-- Шатровая колокольня -->
+    <rect x="864" y="458" width="16" height="22"/>
+    <path d="M862 458 L872 430 L882 458 Z"/>
+    <circle cx="872" cy="427" r="3"/>
+  </g>
+  <path d="M770 492 H840" stroke="#cdcdc7" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+  <path d="M800 504 H830" stroke="#cdcdc7" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+
+  <!-- Гранитный берег справа -->
+  <path d="M1600 680 L1600 560 C1520 548 1400 540 1300 552 C1240 560 1210 600 1195 680 Z" fill="#d3d1cb"/>
+  <path d="M1460 680 C1475 622 1500 602 1540 598 C1570 596 1600 620 1600 680 Z" fill="#c7c5bf"/>
+
+  <!-- Сосны на скалах -->
+  <use href="#pine" transform="translate(1318 560) scale(1.7)"  fill="#8f918b"/>
+  <use href="#pine" transform="translate(1430 550) scale(1.25)" fill="#9d9f99"/>
+  <use href="#pine" transform="translate(1530 546) scale(1.5)"  fill="#8f918b"/>
+  <use href="#pine" transform="translate(1594 566) scale(1.0)"  fill="#9d9f99"/>
+
+  <!-- Маршрут из 10 остановок: от воды к солнцу -->
+  <path d="M640 645 L705 608 L768 570 L828 532 L880 494 L924 450 L960 405 L995 362 L1042 302 L1175 247"
+        stroke="#333333" stroke-opacity="0.35" stroke-width="2"
+        stroke-dasharray="1.5 9" stroke-linecap="round"/>
+  <circle cx="640"  cy="645" r="6.5" fill="#333333" opacity="0.5"/>
+  <circle cx="705"  cy="608" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="768"  cy="570" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="828"  cy="532" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="880"  cy="494" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="924"  cy="450" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="960"  cy="405" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="995"  cy="362" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="1042" cy="302" r="4.5" fill="#333333" opacity="0.4"/>
+  <circle cx="1175" cy="247" r="6"   fill="#333333" opacity="0.5"/>
+</svg>

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,9 +7,15 @@
   text-decoration: none;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Inter";
   font-weight: 400;
+  background: #fff;
+  color: #111;
 }
 
 @font-face {
@@ -32,32 +39,536 @@ body {
   font-style: normal;
   font-display: swap;
 }
-.start {
+/* ============ Шапка (остаётся наверху при прокрутке) ============ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.07);
+}
+.header-wrapper {
+  max-width: 1400px;
   width: calc(100% - 80px);
-  max-width: 1400px;
-  margin: 20px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.start .header {
-  max-width: 1400px;
-  width: 100%;
-}
-.start .header-wrapper {
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
 }
-.start .header-logo {
+.header-logo {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-.start .header-nav {
-  width: 40%;
-  display: flex;
-  justify-content: space-around;
+.header-logo p {
+  font-weight: 600;
+  font-size: 16px;
+  color: #111;
+  letter-spacing: -0.2px;
 }
-.start .header-nav__link {
+.header-nav {
+  width: 40%;
+  max-width: 460px;
+  display: flex;
+  justify-content: space-between;
+}
+.header-nav__link {
+  position: relative;
   color: #333333;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 6px 2px;
+  transition: color 0.2s;
+}
+.header-nav__link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1.5px;
+  background: #111;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s;
+}
+.header-nav__link:hover {
+  color: #111;
+}
+.header-nav__link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ===================== Стартовая страница ===================== */
+.start {
+  width: calc(100% - 80px);
+  max-width: 1400px;
+  margin: 20px auto;
+  scroll-margin-top: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 48px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.start .hero {
+  width: 100%;
+  min-height: 620px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.start .hero-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.start .hero-caption {
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: #999;
+}
+.start .hero-title {
+  margin: 18px 0 20px;
+  font-size: clamp(44px, 7.5vw, 88px);
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -2.5px;
+}
+.start .hero-text {
+  max-width: 560px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: #444;
+}
+.start .hero-text + .hero-text {
+  margin-top: 4px;
+}
+
+/* ===================== Раздел с картой ===================== */
+.layout {
+  scroll-margin-top: 88px;
+}
+.layout h1, .layout h2, .layout h3, .layout h4 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+}
+
+.layout-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Шапка раздела */
+.layout-wrapper > h2 {
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.layout-wrapper > p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+/* Сетка интерфейса */
+.map {
+  display: grid;
+  grid-template-columns: 280px 1fr 360px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Левая колонка (Список остановок) */
+.map-sidebar {
+  background: #fff;
+}
+
+.map-sidebar h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+#map-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 560px;
+  overflow-y: auto;
+}
+
+/* Мобильная кнопка «Остановки» (открывает выезжающее меню) */
+.map-stops-toggle {
+  display: none;
+  padding: 12px 18px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  color: #111;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.map-stops-toggle:hover {
+  background: #f4f4f4;
+}
+
+/* Ряд кнопок над картой: виден только на мобильных */
+.map-cta {
+  display: none;
+}
+
+/* Затемнение за выезжающим меню остановок */
+.map-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 190;
+  background: rgba(17, 17, 17, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.map-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.map-item {
+  padding: 12px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.map-item span {
+  color: #888;
+  font-weight: 500;
+}
+
+.map-item:hover {
+  background: #f4f4f4;
+}
+
+.map-item.active {
+  background: #111;
+  color: #fff;
+  font-weight: 500;
+}
+
+.map-item.active span {
+  color: #aaa;
+}
+
+/* Контейнер карты */
+#map-panel {
+  width: 100%;
+  height: 580px;
+  border-radius: 16px;
+  overflow: hidden;
+  filter: grayscale(100%) contrast(115%);
+}
+
+/* Правая колонка (Информация) */
+.map-info {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 580px;
+}
+
+.map-info-content {
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.map-info .sub-title {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.map-info h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 16px;
+  letter-spacing: -0.3px;
+}
+
+.map-info img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.map-info h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 16px 0 6px 0;
+}
+
+.map-info p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #444;
+  margin: 0 0 16px 0;
+}
+
+.map-info a {
+  color: #111;
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* Кнопка «Начать» (правая колонка, под вводным текстом) */
+.btn-start {
+  width: 100%;
+  margin-top: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 16px 24px;
+  background: #111;
+  border: 1px solid #111;
+  border-radius: 8px;
+  color: #fff;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-start svg {
+  transition: transform 0.25s;
+}
+.btn-start:hover {
+  background: #333;
+}
+.btn-start:hover svg {
+  transform: translateX(6px);
+}
+.btn-start:focus-visible {
+  outline: 2px solid #111;
+  outline-offset: 2px;
+}
+
+/* Блок пагинации (Кнопки Назад / Далее внизу) */
+.map-nav-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+  margin-top: auto;
+}
+
+.btn-nav {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.btn-prev {
+  background: #fff;
+  border: 1px solid #ccc;
+  color: #111;
+}
+
+.btn-prev:hover {
+  background: #f4f4f4;
+}
+
+.btn-next {
+  background: #111;
+  border: 1px solid #111;
+  color: #fff;
+}
+
+.btn-next:hover {
+  background: #333;
+}
+
+.btn-nav:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Базовый стиль маркера */
+.custom-marker {
+  background-color: #111;
+  color: #fff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  border: 2px solid #fff;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.custom-marker:hover {
+  transform: scale(1.1);
+}
+
+/* Стиль для выбранного (активного) маркера
+   (слои активного задаются в js через mapgl.HtmlMarker#setZIndex) */
+.custom-marker.active {
+  background-color: #fff;
+  color: #111;
+  border: 3px solid #111;
+  transform: scale(1.2); /* Делаем его чуть крупнее остальных */
+}
+
+/* ===================== Адаптив ===================== */
+@media (max-width: 900px) {
+  .header-wrapper {
+    width: calc(100% - 32px);
+  }
+  .header-nav {
+    width: auto;
+    max-width: none;
+    justify-content: flex-end;
+    gap: 20px;
+  }
+  .start {
+    width: calc(100% - 32px);
+    margin: 12px auto;
+  }
+  .start .hero {
+    min-height: 520px;
+  }
+  .start .hero-title {
+    letter-spacing: -1.5px;
+  }
+}
+@media (max-width: 760px) {
+  .layout .layout-wrapper {
+    padding: 32px 16px 40px;
+  }
+  .layout .layout-wrapper > h2 {
+    font-size: 28px;
+  }
+  .layout .map {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .layout .map #map-panel {
+    order: 1;
+    grid-column: auto;
+    grid-row: auto;
+    height: 420px;
+  }
+  .layout .map .map-info {
+    order: 2;
+    height: auto;
+  }
+  .layout .map .map-info .btn-start {
+    display: none;
+  }
+  .layout .map-cta {
+    display: flex;
+    gap: 12px;
+  }
+  .layout .map-cta .btn-start {
+    width: auto;
+    flex: 1;
+    margin-top: 0;
+  }
+  .layout .map-stops-toggle {
+    display: flex;
+  }
+  .layout .map-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 200;
+    width: 300px;
+    max-width: 86vw;
+    padding: 24px 20px;
+    background: #fff;
+    box-shadow: 8px 0 32px rgba(17, 17, 17, 0.2);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(-105%);
+    transition: transform 0.3s ease;
+  }
+  .layout .map-sidebar.open {
+    transform: translateX(0);
+  }
+  .layout #map-list {
+    flex: 1;
+    max-height: none;
+  }
+}
+@media (max-width: 480px) {
+  .header-wrapper {
+    padding: 10px 0;
+  }
+  .header-logo p {
+    font-size: 15px;
+  }
+  .header-nav {
+    gap: 14px;
+  }
+  .header-nav__link {
+    font-size: 13px;
+  }
+  .start .hero {
+    min-height: 460px;
+  }
+  .start .hero-title {
+    font-size: 40px;
+    letter-spacing: -1px;
+  }
+  .start .hero-text {
+    font-size: 16px;
+  }
+  .layout .layout-wrapper > h2 {
+    font-size: 24px;
+  }
+  .layout .layout-wrapper > p {
+    font-size: 14px;
+  }
 }
