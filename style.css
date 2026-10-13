@@ -199,10 +199,6 @@ body {
 .layout {
   scroll-margin-top: 88px;
 }
-.layout h1, .layout h2, .layout h3, .layout h4 {
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-}
 
 .layout-wrapper {
   width: calc(100% - 80px);
