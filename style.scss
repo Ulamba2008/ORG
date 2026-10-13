@@ -615,6 +615,24 @@ body {
 
     .hero {
       min-height: 520px;
+
+      // На мобильных текст прижат к низу — добавляем белую вуаль снизу,
+      // чтобы заголовок читался на любой части пейзажа
+      background:
+        linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0) 40%,
+          rgba(255, 255, 255, 0.75) 80%,
+          #fff 100%
+        ),
+        linear-gradient(
+          90deg,
+          #fff 0%,
+          #fff 12%,
+          rgba(255, 255, 255, 0.55) 45%,
+          rgba(255, 255, 255, 0) 68%
+        ),
+        url("img/hero-bg.jpg") right top / cover no-repeat;
     }
 
     .hero-title {

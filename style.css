@@ -535,6 +535,7 @@ body {
   }
   .start .hero {
     min-height: 520px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.75) 80%, #fff 100%), linear-gradient(90deg, #fff 0%, #fff 12%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0) 68%), url("img/hero-bg.jpg") right top/cover no-repeat;
   }
   .start .hero-title {
     letter-spacing: -1.5px;
