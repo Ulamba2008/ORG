@@ -132,13 +132,16 @@ body {
   padding-bottom: 48px;
   border-bottom: 1px solid #e8e8e8;
 
-  // Hero-блок. Фон пока белый (пустой). Рисованная панорама лежит в
-  // img/hero-bg.svg — вернуть её можно одной строкой:
+  // Hero-блок. Фон — иллюстрация img/hero-bg.jpg (сосна на скале среди
+  // туманных островов, исходник img/bg.png): cover заполняет весь блок
+  // на любом экране, привязка к правому верхнему краю сохраняет верхушку
+  // сосны и небо с птицами, снизу обрезается полоса воды, а скала
+  // уходит за нижний край — выглядит как продолжение за кадром.
+  // Пейзаж светлый, поэтому текст остаётся тёмным; белая вуаль слева
+  // держит зону заголовка контрастной.
+  // Рисованная панорама осталась в img/hero-bg.svg — вернуть можно так:
   //
   // background: url("img/hero-bg.svg") bottom center / 100% auto no-repeat;
-  //
-  // Когда будет готово настоящее фото (img/hero-bg.jpg), текст перевести
-  // в белый: .hero-caption → rgba(255,255,255,.75), .hero-text → rgba(255,255,255,.85)
   .hero {
     width: 100%;
     min-height: 620px;
@@ -146,6 +149,15 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.85) 0%,
+        rgba(255, 255, 255, 0.3) 45%,
+        rgba(255, 255, 255, 0) 65%
+      ),
+      url("img/hero-bg.jpg") right top / cover no-repeat;
   }
 
   .hero-wrapper {
@@ -159,7 +171,7 @@ body {
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 2.5px;
-    color: #999;
+    color: #666;
   }
 
   .hero-title {
@@ -184,6 +196,62 @@ body {
   // Блок «О нас» убран: позже станет отдельной страницей (styles тоже убраны)
 }
 
+/* ===================== Блок «О нас» (внизу главной, под картой) ===================== */
+
+.about {
+  width: calc(100% - 80px);
+  max-width: 1400px;
+  margin: 0 auto;
+
+  padding: 48px 0 56px;
+  border-top: 1px solid #e8e8e8;
+  scroll-margin-top: 88px;
+
+  &-title {
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    margin-bottom: 32px;
+  }
+
+  &-card {
+    display: grid;
+    // Фото слева (280px), текст справа: фото as-is, в оригинальной
+    // пропорции 3:4 — без обрезки и растяжения
+    grid-template-columns: minmax(0, 280px) 1fr;
+    gap: 48px;
+    align-items: start;
+
+    img {
+      width: 100%;
+      border-radius: 24px;
+    }
+  }
+
+  &-card__text {
+    max-width: 620px;
+
+    p {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #444;
+    }
+
+    p + p {
+      margin-top: 16px;
+    }
+
+    // Крупный вводный абзац (идёт после базовых p-правил — перебивает их)
+    p.about-card__lead {
+      font-size: 24px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: -0.3px;
+      color: #111;
+    }
+  }
+}
+
 /* ===================== Раздел с картой ===================== */
 
 .layout {
@@ -196,9 +264,12 @@ body {
 }
 
 .layout-wrapper {
+  // Та же геометрия, что у .start и .about (те же 40px от края),
+  // чтобы заголовок маршрута совпадал по отступу с hero и «О нас»
+  width: calc(100% - 80px);
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 0;
 }
 
 /* Шапка раздела */
@@ -543,12 +614,19 @@ body {
       letter-spacing: -1.5px;
     }
   }
+
+  .layout {
+    // На узких десктопах общий край 16px — как у .start и .about
+    .layout-wrapper {
+      width: calc(100% - 32px);
+    }
+  }
 }
 
 @media (max-width: 760px) {
   .layout {
     .layout-wrapper {
-      padding: 32px 16px 40px;
+      padding: 32px 0 40px;
     }
 
     .layout-wrapper > h2 {
@@ -623,6 +701,40 @@ body {
     #map-list {
       flex: 1;
       max-height: none;
+    }
+  }
+
+  // Блок «О нас» складывается в одну колонку, фото уезжает под текст
+  .about {
+    width: calc(100% - 32px);
+
+    padding: 32px 0 40px;
+
+    &-title {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    // Фото складывается под текст
+    &-card {
+      grid-template-columns: 1fr;
+      gap: 24px;
+
+      img {
+        max-width: 240px;
+      }
+    }
+
+    &-card__text {
+      max-width: none;
+
+      p {
+        font-size: 16px;
+      }
+
+      p.about-card__lead {
+        font-size: 20px;
+      }
     }
   }
 }

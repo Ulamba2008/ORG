@@ -120,6 +120,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.3) 45%, rgba(255, 255, 255, 0) 65%), url("img/hero-bg.jpg") right top/cover no-repeat;
 }
 .start .hero-wrapper {
   display: flex;
@@ -131,7 +132,7 @@ body {
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 2.5px;
-  color: #999;
+  color: #666;
 }
 .start .hero-title {
   margin: 18px 0 20px;
@@ -150,6 +151,50 @@ body {
   margin-top: 4px;
 }
 
+/* ===================== Блок «О нас» (внизу главной, под картой) ===================== */
+.about {
+  width: calc(100% - 80px);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 48px 0 56px;
+  border-top: 1px solid #e8e8e8;
+  scroll-margin-top: 88px;
+}
+.about-title {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+  margin-bottom: 32px;
+}
+.about-card {
+  display: grid;
+  grid-template-columns: minmax(0, 280px) 1fr;
+  gap: 48px;
+  align-items: start;
+}
+.about-card img {
+  width: 100%;
+  border-radius: 24px;
+}
+.about-card__text {
+  max-width: 620px;
+}
+.about-card__text p {
+  font-size: 17px;
+  line-height: 1.6;
+  color: #444;
+}
+.about-card__text p + p {
+  margin-top: 16px;
+}
+.about-card__text p.about-card__lead {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  color: #111;
+}
+
 /* ===================== Раздел с картой ===================== */
 .layout {
   scroll-margin-top: 88px;
@@ -160,9 +205,10 @@ body {
 }
 
 .layout-wrapper {
+  width: calc(100% - 80px);
   max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 40px 0;
 }
 
 /* Шапка раздела */
@@ -481,10 +527,13 @@ body {
   .start .hero-title {
     letter-spacing: -1.5px;
   }
+  .layout .layout-wrapper {
+    width: calc(100% - 32px);
+  }
 }
 @media (max-width: 760px) {
   .layout .layout-wrapper {
-    padding: 32px 16px 40px;
+    padding: 32px 0 40px;
   }
   .layout .layout-wrapper > h2 {
     font-size: 28px;
@@ -540,6 +589,30 @@ body {
   .layout #map-list {
     flex: 1;
     max-height: none;
+  }
+  .about {
+    width: calc(100% - 32px);
+    padding: 32px 0 40px;
+  }
+  .about-title {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  .about-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .about-card img {
+    max-width: 240px;
+  }
+  .about-card__text {
+    max-width: none;
+  }
+  .about-card__text p {
+    font-size: 16px;
+  }
+  .about-card__text p.about-card__lead {
+    font-size: 20px;
   }
 }
 @media (max-width: 480px) {
