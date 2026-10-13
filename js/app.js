@@ -48,7 +48,7 @@ const places = [
       { links: [{ linkText: "Источники", url: "https://kizhi.karelia.ru/collections/arxitekturnyie-pamyatniki/czerkov-preobrazheniya-gospodnya" }] },
       {
         title: "Как добраться",
-        text: "Сам остров является музеем заповедником. Билет стоит от 1200 до 2200 руб. Также до острова нужно добираться по воде. Билет на скоростной теплоход около 5000 туда и обратно."
+        text: "Сам остров является музеем заповедником. Также до острова нужно добираться по воде."
       }
     ]
   },
@@ -102,6 +102,9 @@ const places = [
 document.addEventListener("DOMContentLoaded", () => {
     const listContainer = document.getElementById('map-list');
     const infoContainer = document.getElementById('info');
+
+    // Вводная панель из исходной разметки: показывается по пункту «Начало»
+    const introHtml = infoContainer.innerHTML;
 
     // Мобильное меню остановок: выезжающая слева панель по кнопке «Остановки»
     const stopsToggle = document.getElementById('stops-toggle');
@@ -190,13 +193,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Кнопка «Начать» (и любые элементы с data-goto-place):
-    // активирует нужную точку маршрута
-    document.querySelectorAll('[data-goto-place]').forEach(button => {
-        button.addEventListener('click', () => {
-            goToPlace(Number(button.dataset.gotoPlace) || 1);
+    // Кнопки «Начать» (data-goto-place) активируют точку маршрута.
+    // Навешиваются заново после восстановления вводной панели в showIntro
+    function bindGotoButtons(scope) {
+        scope.querySelectorAll('[data-goto-place]').forEach(button => {
+            button.addEventListener('click', () => {
+                goToPlace(Number(button.dataset.gotoPlace) || 1);
+            });
         });
-    });
+    }
+
+    bindGotoButtons(document);
 
     // Длинные тексты (история, значение) делим на абзацы по пустой строке
     function renderParagraphs(text) {
@@ -243,7 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
 
             <div class="map-nav-buttons">
-                <button class="btn-nav btn-prev" id="prev-btn" ${index === 0 ? 'disabled' : ''}>← Назад</button>
+                <button class="btn-nav btn-prev" id="prev-btn">${index === 0 ? '← В начало' : '← Назад'}</button>
                 <button class="btn-nav btn-next" id="next-btn">Далее →</button>
             </div>
         `;
@@ -251,6 +258,9 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('prev-btn').addEventListener('click', () => {
             if (index > 0) {
                 goToPlace(places[index - 1].id);
+            } else {
+                // С первой остановки «Назад» уводит в состояние «Начало»
+                showIntro();
             }
         });
 
@@ -264,8 +274,35 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Снимаем выделение со всего списка: края (Начало/Конец), остановки
+    // и маркеры, возвращая маркерам исходный порядок слоёв
+    function clearActive() {
+        startItem.classList.remove('active');
+        endItem.classList.remove('active');
+
+        markers.forEach(m => {
+            m.listItem.classList.remove('active');
+            m.markerElement.classList.remove('active');
+
+            if (m.marker) {
+                m.marker.setZIndex(100 - m.id);
+            }
+        });
+    }
+
+    // Начало маршрута: вводная панель, карта в исходном виде всего маршрута
+    function showIntro() {
+        clearActive();
+        startItem.classList.add('active');
+        infoContainer.innerHTML = introHtml;
+        bindGotoButtons(infoContainer);
+        showAllPlaces();
+    }
+
     // Финальная карточка: завершение маршрута после десятой остановки
     function showFinalCard() {
+        clearActive();
+        endItem.classList.add('active');
         infoContainer.innerHTML = `
             <div class="map-info-content">
                 <div class="sub-title">Финал маршрута</div>
@@ -291,11 +328,15 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
         document.getElementById('restart-btn').addEventListener('click', () => {
-            goToPlace(1);
+            showIntro();
         });
     }
 
     function selectPlace(id) {
+        // Края списка (Начало/Конец) теряют выделение, когда выбрана остановка
+        startItem.classList.remove('active');
+        endItem.classList.remove('active');
+
         markers.forEach(m => {
             if (m.id === id) {
                 m.listItem.classList.add('active');
@@ -323,6 +364,22 @@ document.addEventListener("DOMContentLoaded", () => {
             closeStopsMenu();
         }
     }
+
+    // Края списка: «Начало» открывает вводную панель, «Конец» — финальную карточку
+    const startItem = document.createElement('div');
+    startItem.className = 'map-item map-item--edge';
+    startItem.innerHTML = `<span>—</span> Начало`;
+
+    startItem.addEventListener('click', () => {
+        showIntro();
+
+        if (isMobileMenu()) {
+            closeStopsMenu();
+        }
+    });
+    // При открытии сайта показывается вводная панель — «Начало» выделено
+    startItem.classList.add('active');
+    listContainer.appendChild(startItem);
 
     places.forEach((place, index) => {
         const numberStr = String(index + 1).padStart(2, '0');
@@ -368,17 +425,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    if (map && allCoordinates.length > 0) {
+    const endItem = document.createElement('div');
+    endItem.className = 'map-item map-item--edge';
+    endItem.innerHTML = `<span>—</span> Конец`;
+
+    endItem.addEventListener('click', () => {
+        showFinalCard();
+
+        if (isMobileMenu()) {
+            closeStopsMenu();
+        }
+    });
+    listContainer.appendChild(endItem);
+
+    // Исходный вид карты: центр маршрута и зум 8, как при её создании
+    // (setViewport работает нестабильно, поэтому центрируем вручную)
+    function showAllPlaces() {
+        if (!map || allCoordinates.length === 0) {
+            return;
+        }
+
         const lons = allCoordinates.map(c => c[0]);
         const lats = allCoordinates.map(c => c[1]);
 
+        const centerLon = (Math.min(...lons) + Math.max(...lons)) / 2;
+        const centerLat = (Math.min(...lats) + Math.max(...lats)) / 2;
+
         try {
-            map.setViewport([
-                [Math.min(...lons) - 0.05, Math.min(...lats) - 0.05],
-                [Math.max(...lons) + 0.05, Math.max(...lats) + 0.05]
-            ]);
+            map.setCenter([centerLon, centerLat]);
+            map.setZoom(8);
         } catch (e) {
-            console.warn('Не удалось показать весь маршрут на карте:', e);
+            console.warn('Не удалось привести карту к исходному виду:', e);
         }
     }
+
+    showAllPlaces();
 });

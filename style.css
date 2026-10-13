@@ -244,8 +244,6 @@ body {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  max-height: 560px;
-  overflow-y: auto;
 }
 
 /* Мобильная кнопка «Остановки» (открывает выезжающее меню) */
@@ -321,6 +319,24 @@ body {
 
 .map-item.active span {
   color: #aaa;
+}
+
+/* Пункты «Начало» и «Конец» в списке остановок */
+.map-item--edge {
+  color: #666;
+}
+
+.map-item--edge span {
+  color: #999;
+}
+
+/* Выделенные края списка — фон чуть светлее, чем у остановок */
+.map-item--edge.active {
+  background: #333;
+}
+
+.map-item--edge.active span {
+  color: #ccc;
 }
 
 /* Контейнер карты */
@@ -584,7 +600,6 @@ body {
   }
   .layout #map-list {
     flex: 1;
-    max-height: none;
   }
   .about {
     width: calc(100% - 32px);
